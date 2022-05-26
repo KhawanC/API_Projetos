@@ -27,13 +27,13 @@ Exemplo de Post no Instrutor (pelo DTO)
 
 -----------------------------
 
-Exemplo de Post no Instrutor (pelo DTO)
+Exemplo de Post na Turma (pelo DTO)
 
 ![Imagem ](prints/dto_Post_Turma.PNG)
 
 -----------------------------
 
-Exemplo de Post no Instrutor (pelo DTO)
+Exemplo de Post na Atividade (pelo DTO)
 
 ![Imagem ](prints/dtp_Post_Atividade.PNG)
 
