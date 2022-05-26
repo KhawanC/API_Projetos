@@ -1,4 +1,4 @@
-## Avalização 1
+## Avaliação 1
 
 Esse ReadMe foi feita para explicar algumas observações sobre o trabalho de API do Serratec.
 
