@@ -1,0 +1,104 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    font-family: 'Playfair Display', serif;
+    font-size: 62.5%;
+}
+
+h1, h2, h3, p {
+    color: white;
+}
+
+body {
+    background-color: #212529;
+    font-size: 1.6rem;
+    max-width: 85.0rem;
+
+    text-align: center;
+
+    margin: auto;
+}
+
+header, section {
+    padding: 1.9rem;
+}
+
+header h1 {
+    color: white;
+}
+
+header {
+    letter-spacing: 0.5mm;
+    line-height: 3.8rem;
+    font-size: 2.1rem;
+}
+
+body .linha_1 {
+    border: 0.2rem solid white;
+    border-radius: 0.4rem;
+
+    margin-bottom: 5rem;
+}
+
+.container {
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+
+    padding: 20px;
+
+    justify-content: center;
+}
+
+img {
+    height: 240px;
+    width: 100%;
+    object-fit: cover;
+
+    border: 2px solid #212529;
+    border-radius: 15px;
+}
+
+.card {
+    margin: auto;
+    background-color: #343a40;
+    display: flex;
+    flex-direction: column;
+    
+    gap: 20px;
+
+    height: 45rem;
+    width: 30rem;
+
+    align-items: center;
+    justify-content: space-evenly;
+    
+
+    padding: 15px 15px 40px;
+
+    border: 1px solid #212529;
+    border-radius: 15px;
+}
+
+.card div h2 {
+    overflow: hidden;
+    text-overflow: clip;
+    max-width: 200px;
+    max-height: 50px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+
+    border: 1px solid #495057;
+
+    border-radius: 20px;
+    padding-inline: 15px;
+    padding-block: 5px;
+}
