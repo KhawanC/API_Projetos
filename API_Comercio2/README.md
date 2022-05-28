@@ -8,41 +8,51 @@ Projeto simples de API REST utilizando o framework Spring
 ## Script do banco de dados 
 
 ```bash
-CREATE TABLE public.fornecedor (
-  id_fornecedor serial4 NOT NULL,
-  cnpj int8 NOT NULL,
-  tipo varchar(255) NULL,
-  razao_social varchar(255),
-  uf varchar(2) NULL,
-  telefone varchar(100) NULL,
-  email varchar(255) NULL,
-  nome_fantasia varchar(255),
-  status_situacao varchar(100) NULL,
-  bairro varchar(255) NULL,
-  logradouro varchar(255) NULL,
-  numero int8 NULL,
-  complemento varchar(100) NULL,
-  cep varchar(10) NULL,
-  municipio varchar(255),
-  data_abertura timestamp NULL,
-  PRIMARY KEY (id_fornecedor)
+create table categoria(
+id_categoria serial not null,
+nome_categoria varchar(50),
+primary key(id_categoria)
 );
 
-CREATE TABLE public.categoria (
-  id_categoria serial4 NOT NULL,
-  nome_categoria varchar(255),
-  PRIMARY KEY (id_categoria)
+create table endereco(
+id_endereco int not null,
+logradouro varchar,
+complemento varchar,
+bairro varchar,
+localidade varchar,
+uf varchar,
+ibge varchar,
+primary key(id_endereco)
 );
 
-CREATE TABLE public.produto (
-  id_produto serial4 NOT NULL,
-  sku varchar(255),
-  nome_produto varchar(255),
-  id_fornecedor int8 NOT NULL,
-  id_categoria int8 NOT NULL,
-  PRIMARY KEY (id_produto),
-  FOREIGN KEY (id_fornecedor) REFERENCES public.fornecedor(id_fornecedor),
-  FOREIGN KEY (id_categoria) REFERENCES public.categoria(id_categoria)
+create table fornecedor(
+cnpj_fornecedor bigint not null,
+situacao varchar,
+tipo varchar,
+nome varchar,
+porte varchar,
+abertura varchar,
+data_situacao varchar,
+motivo_situacao varchar,
+email varchar,
+natureza_juridica varchar,
+ultima_atualizacao varchar,
+status varchar,
+fantasia varchar,
+id_endereco int,
+primary key(cnpj_fornecedor),
+foreign key(id_endereco) references endereco(id_endereco)
+);
+
+create table produto(
+id_produto serial not null,
+sku varchar,
+nome_produto varchar,
+cnpj_fornecedor bigint,
+id_categoria int not null,
+primary key(id_produto),
+foreign key(cnpj_fornecedor) references fornecedor(cnpj_fornecedor),
+foreign key(id_categoria) references  categoria(id_categoria)
 );
 ```
 
@@ -62,6 +72,7 @@ As credenciais para acesso ao banco de dados e o nome do contexto da API deverã
 ## Sobre
 
 - Author - [Alexandre Paixão]
+- Author - [Kauã Cassiano]
 
 ## Licença
 
