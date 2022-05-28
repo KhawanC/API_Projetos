@@ -2,7 +2,7 @@ package com.residencia.comercio.controllers;
 
 import java.util.List;
 
-import javax.validation.Valid;
+import javax.naming.directory.NoSuchAttributeException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,9 +21,6 @@ import com.residencia.comercio.entities.Categoria;
 import com.residencia.comercio.exceptions.NoSuchElementFoundException;
 import com.residencia.comercio.services.CategoriaService;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-
 @RestController
 @RequestMapping("/categoria")
 public class CategoriaController {
@@ -36,33 +33,21 @@ public class CategoriaController {
 		return new ResponseEntity<>(categoriaList, HttpStatus.OK);
 	}
 
-	@GetMapping("/dto/{id}")
-	public ResponseEntity<CategoriaDTO> findCategoriaDTOById(@PathVariable Integer id) {
-		CategoriaDTO categoriaDTO = categoriaService.findCategoriaDTOById(id);
-		return new ResponseEntity<>(categoriaDTO, HttpStatus.OK);
-	}
-	
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> findCategoriaById(@PathVariable Integer id) {
 		Categoria categoria = categoriaService.findCategoriaById(id);
-		if(null == categoria)
+		if (null == categoria)
 			throw new NoSuchElementFoundException("Não foi encontrado Categoria com o id " + id);
 		else
 			return new ResponseEntity<>(categoria, HttpStatus.OK);
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<Categoria> saveCategoria(@RequestBody Categoria categoria) {
 		Categoria novoCategoria = categoriaService.saveCategoria(categoria);
 		return new ResponseEntity<>(novoCategoria, HttpStatus.CREATED);
 	}
 
-	@PostMapping("/dto")
-	public ResponseEntity<CategoriaDTO> saveCategoriaDTO(@RequestBody CategoriaDTO categoriaDTO) {
-		CategoriaDTO novoCategoriaDTO = categoriaService.saveCategoriaDTO(categoriaDTO);
-		return new ResponseEntity<>(novoCategoriaDTO, HttpStatus.CREATED);
-	}
-	
 	@PutMapping
 	public ResponseEntity<Categoria> updateCategoria(@RequestBody Categoria categoria) {
 		Categoria novoCategoria = categoriaService.updateCategoria(categoria);
@@ -71,11 +56,36 @@ public class CategoriaController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteCategoria(@PathVariable Integer id) {
-		if(null == categoriaService.findCategoriaById(id))
+		if (null == categoriaService.findCategoriaById(id))
 			return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
-		
+
 		categoriaService.deleteCategoria(id);
 		return new ResponseEntity<>("", HttpStatus.OK);
+	}
+
+	// DTO End Points
+
+	@GetMapping("/dto/{id}")
+	public ResponseEntity<CategoriaDTO> findCategoriaDTOById(@PathVariable Integer id) {
+		CategoriaDTO categoriaDTO = categoriaService.findCategoriaDTOById(id);
+		if (categoriaDTO.getIdCategoria() == null) {
+			throw new NoSuchElementFoundException("GET DTO - Não foi possível encontrar a categoria com o ID " + id);
+		} else {
+			return new ResponseEntity<>(categoriaDTO, HttpStatus.OK);
+		}
+	}
+	
+	@PostMapping("/dto")
+	public ResponseEntity<Categoria> saveCategoriaDTO(@RequestBody CategoriaDTO categoriaDTO) {
+		if(categoriaDTO.getNomeCategoria() == null || categoriaDTO.getIdCategoria() != null){
+			throw new NoSuchElementFoundException("Há um problema no Body do seu JSON");
+		}
+		else if(categoriaService.findIfNomeCategoriaExists(categoriaDTO.getNomeCategoria())) {
+			throw new NoSuchElementFoundException("Já existe uma categoria com o nome " + categoriaDTO.getNomeCategoria());
+		}
+		else {
+			return new ResponseEntity<>(categoriaService.saveCategoriaDTO(categoriaDTO), HttpStatus.CREATED);
+		}
 	}
 
 }

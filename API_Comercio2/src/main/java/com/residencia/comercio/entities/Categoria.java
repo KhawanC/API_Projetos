@@ -1,6 +1,5 @@
 package com.residencia.comercio.entities;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,14 +11,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "categoria")
-@JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "idCategoria")
 public class Categoria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +26,7 @@ public class Categoria {
 	private String nomeCategoria;
 	
 	@OneToMany(mappedBy = "categoria")
+	@JsonIgnore
 	private List<Produto> produtoList;
 
 	public Integer getIdCategoria() {

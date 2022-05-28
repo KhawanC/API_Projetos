@@ -14,13 +14,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "produto")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id_produto")
 public class Produto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_produto")
-	private Integer id;
+	private Integer idProduto;
 
 	@Column(name = "sku")
 	private String sku;
@@ -29,7 +28,7 @@ public class Produto {
 	private String nome_produto;
 
 	@ManyToOne
-	@JoinColumn(name = "id_fornecedor", referencedColumnName = "id_fornecedor")
+	@JoinColumn(name = "cnpj_fornecedor", referencedColumnName = "cnpj_fornecedor")
 	private Fornecedor fornecedor;
 
 	@ManyToOne
@@ -37,11 +36,11 @@ public class Produto {
 	private Categoria categoria;
 
 	public Integer getId() {
-		return id;
+		return idProduto;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.idProduto = id;
 	}
 
 	public String getSku() {
